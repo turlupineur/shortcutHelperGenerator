@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Automatic-Module-Name: shortcutHelper.modelisationLanguage.ide
+Bundle-ManifestVersion: 2
+Bundle-Name: shortcutHelper.modelisationLanguage.ide
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: shortcutHelper.modelisationLanguage.ide; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: shortcutHelper.modelisationLanguage,
+ org.eclipse.xtext.ide,
+ org.eclipse.xtext.xbase.ide,
+ org.antlr.runtime;bundle-version="[3.2.0,3.2.1)"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: shortcutHelper.ide.contentassist.antlr.internal,
+ shortcutHelper.ide.contentassist.antlr
+

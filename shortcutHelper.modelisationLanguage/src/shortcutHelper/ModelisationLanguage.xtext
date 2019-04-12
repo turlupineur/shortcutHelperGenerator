@@ -1,0 +1,291 @@
+grammar shortcutHelper.ModelisationLanguage with org.eclipse.xtext.common.Terminals
+
+generate modelisationLanguage "http://www.ModelisationLanguage.shortcutHelper"
+
+
+Root:
+	datatypes+=TypeData*
+	services+=Service*
+	utils+=Util*
+	helpers+=Helper*
+	logics+=Logic*
+	Backendcommands+=Backendcommand*
+	(commands+=Command)*
+	(shortcuts+=Shortcut)*
+;
+
+Shortcut:
+	'shortcut' name=ID '=' command=[Command] '{'
+		(paramReferences+=CommandParameterReference)*
+	'}'
+;
+
+CommandParameterReference:
+	'set' param=[CommandParameter] '=' value=BasicType 
+;
+
+BasicType:
+	STRING | INT
+;
+
+Command: 
+	'Command' name=ID 'implementedby' backendCommand=[Backendcommand] 'withparam' '{'
+		description=Description?
+		noParameter=NoParameter?
+		(parameters+=CommandParameter)*
+	'}'
+;
+
+Backendcommand:
+	'backendcommand' name=ID '{'
+		description=Description?
+		usingSystemKomponent=UsingSystemKomponent
+		parameterDeclaration=BackendParameterDeclaration
+		returningDeclaration=ReturningDeclaration
+		implementation=Implementation
+	'}'
+;
+
+
+
+Logic:
+	'logic' name=ID '{'
+		description=Description?
+		usingSystemKomponent=UsingSystemKomponent?
+		parameterDeclaration=BackendParameterDeclaration
+		returningDeclaration=ReturningDeclaration
+		implementation=Implementation
+	'}'
+;
+
+
+Description:
+	UNMODELISABLE_INFORMATION
+;
+
+CommandParameter:
+	name=ID type=[TypeData] parameterCategory=PARAMETER_CATEGORY backendParameterReference=BackendParameterReference
+;
+
+BackendParameter:
+	'parameter' name=ID type=[TypeData] parameterCategory=PARAMETER_CATEGORY
+;
+
+BackendParameterReference:
+	'as' 'inputparamter' backendCommandParameter=[BackendParameter]
+;
+
+NoParameter:
+	'NoParameter'
+;
+
+BackendParameterDeclaration:
+	'input' 'parameter' ':'
+	noParameter=NoParameter?
+	parameters+=BackendParameter*
+;
+
+ReturningDeclaration:
+	'returns' ':' returnType=TypeDataReference
+;
+
+
+UsingSystemKomponent:
+	'using' ':'
+		nothing=UsingNothing?
+		components+=[UsableSystemComponent]*
+		';'
+;
+
+UsingNothing:
+	'nothing'
+;
+
+
+
+UsableSystemComponent:
+	Service | Util | Helper | Logic 
+;
+
+Service:
+	'service' name=ID '{'	
+		description=Description?
+		methods+=Method*
+	'}'
+;
+
+Util:
+	'util' name=ID '{'
+		description=Description?
+		methods+=Method*	
+	'}'
+;
+
+Helper:
+	'helper' name=ID '{'
+		description=Description?
+		methods+=Method*
+	'}'
+;
+
+Method:
+	name=ID 'returns' returnType=TypeDataReference '{'
+		description=Description?
+		noArgument=NoArgument?
+		arguments+=MethodArgument*
+	'}'
+;
+
+MethodArgument:
+	'param' name=ID type=[TypeData]
+;
+
+NoArgument:
+	'NoArgument'
+;
+
+TypeDataReference:
+	type=[TypeData] | void='void' | valueInClipboard='ValueInClipboard' | unmodelisableInformation=UNMODELISABLE_INFORMATION
+;
+
+TypeData:
+	'datatype'name=ID className=STRING?
+;
+
+// IMPLEMENTATION PART
+
+
+AttribuableValue:
+	BackendParameter | Variable | CallComponentMethod | CallLogic
+;
+
+
+Implementation:
+	'implementation' '{'
+		implementationLines+=ImplementationLine+
+	'}'
+;
+
+ImplementationLine:
+	ShowInfo |ShowWarning | ShowError | CallComponentMethod | CallLogic | Variable | VariableValueAttribution | Condition | {ImplementationLine} UNMODELISABLE_INFORMATION 
+;
+
+ShowError:
+	'showerror' STRING
+;
+
+ShowWarning:
+	'showwarning' STRING
+;
+
+ShowInfo:
+	'showinfo' STRING
+;
+Variable:
+	'variable' typeVariable=[TypeData] name=ID initialInitialisationVariable=InitialInitialisationVariable
+;
+
+CallLogic:
+	'callLogic' logic=[Logic] '('
+		componentBackendParameterAttributions+=ComponentBackendParameterValueAttribut*
+	')'
+;
+
+CallComponentMethod:
+	'callComponentMethod' usableSystemComponent=[UsableSystemComponent] "." method=[Method|QualifiedName] '('
+		argumentAttributions+=MethodArgumentValueAttribut*
+	')'
+;
+
+MethodArgumentValueAttribut:
+	'set' argument=[MethodArgument] "=" value=MethodArgumentAttribuableValue
+;
+ComponentBackendParameterValueAttribut:
+	'set' parameter=[BackendParameter] "=" value=ComponentBackendParameterAttribuableValue
+;
+
+ComponentBackendParameterAttribuableValue:
+	Null | UNMODELISABLE_INFORMATION | BasicType | value=[ComponentBackendParameterAttribuableExpression] 
+;
+
+ComponentBackendParameterAttribuableExpression:
+	Variable | BackendParameter
+;
+
+MethodArgumentAttribuableValue:
+	Null | UNMODELISABLE_INFORMATION | BasicType | value=[MethodArgumentAttribuableExpression] 
+;
+MethodArgumentAttribuableExpression:
+	Variable | BackendParameter
+;
+
+InitialInitialisationVariable:
+	';' | '=' value=VariableNewValue
+;
+
+VariableValueAttribution:	
+	variable=[Variable] '=' variableNewValue=ValueExpression
+;
+// Not used anymore
+VariableNewValue:
+	Null | UNMODELISABLE_INFORMATION | value=[ValueExpression]
+;
+
+ValueExpression:
+	Null | UNMODELISABLE_INFORMATION | value=AttribuableValue
+;
+
+Condition:
+	'if' predicat=Predicat complementPredicat=ComplementPredicat? '{'
+		conditionImplementation=ConditionImplementation
+	'}' elseCondition=ElseCondition?';';
+	
+ConditionImplementation:
+	implementationLines+=ImplementationLine*	
+;
+Predicat:
+	variable=[Variable] '=' comparisonValue=PredicatValueExpression
+;
+
+PredicatValueExpression:
+	Null | UNMODELISABLE_INFORMATION | value=[PredicatAttribuableValue] | STRING
+;
+
+PredicatAttribuableValue:
+	BackendParameter | Variable
+;
+
+ComplementPredicat:
+	logicalLink=LOGICAL_LINK predicat=Predicat
+;
+
+ElseCondition:
+	'else' '{'
+		conditionImplementation=ConditionImplementation
+	'}'
+;
+
+// Only used to simplify the search for variable.
+VariableContainer:
+	ConditionImplementation | Implementation
+;
+
+// Not used anymore
+ComparisonValue:
+	Null | UNMODELISABLE_INFORMATION | method=[Method|QualifiedName]
+;
+
+Null:
+	'null'
+;
+
+QualifiedName:
+  ID ('.' ID)*
+;
+
+LOGICAL_LINK: OR='or' | AND='and';
+
+terminal UNMODELISABLE_INFORMATION:
+	'@' (.)+ '@'
+;
+enum PARAMETER_CATEGORY: REQUIRED="required" | OPTIONAL='optional' | DEFAULT='default';
