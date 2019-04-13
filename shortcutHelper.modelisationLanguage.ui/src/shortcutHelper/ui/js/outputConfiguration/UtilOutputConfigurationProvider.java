@@ -91,7 +91,7 @@ public class UtilOutputConfigurationProvider implements IOutputConfigurationProv
 				ModelisationLanguageGenerator.BACKEND_COMMAND_OUTPUT);
 		onceBackendCommand.setDescription("Gen Folder");
 		onceBackendCommand
-				.setOutputDirectory(ROOT + LOCAL_FOLDER_FOR_GENERATION + "/backendcommand/" + SRC_GEN_JAVASCRIPT);
+				.setOutputDirectory(ROOT + LOCAL_FOLDER_FOR_GENERATION + "/backendCommand/" + SRC_GEN_JAVASCRIPT);
 		onceBackendCommand.setOverrideExistingResources(true);
 		onceBackendCommand.setCreateOutputDirectory(true);
 		onceBackendCommand.setCleanUpDerivedResources(true);
@@ -101,7 +101,7 @@ public class UtilOutputConfigurationProvider implements IOutputConfigurationProv
 				ModelisationLanguageGenerator.BACKEND_COMMAND_OUTPUT_ONCE);
 		genBackendCommand.setDescription("Output Folder (once)");
 		genBackendCommand
-				.setOutputDirectory(ROOT + LOCAL_FOLDER_FOR_GENERATION + "/backendcommand/" + SRC_GEN_ONCE_JAVASCRIPT);
+				.setOutputDirectory(ROOT + LOCAL_FOLDER_FOR_GENERATION + "/backendCommand/" + SRC_GEN_ONCE_JAVASCRIPT);
 		genBackendCommand.setOverrideExistingResources(false);
 		genBackendCommand.setCreateOutputDirectory(true);
 		genBackendCommand.setCleanUpDerivedResources(false);
