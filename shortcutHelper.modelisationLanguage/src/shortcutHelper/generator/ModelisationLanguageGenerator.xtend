@@ -58,9 +58,17 @@ class ModelisationLanguageGenerator extends AbstractGenerator {
 	public static final String BACKEND_COMMON_OUTPUT = "backendCommonOutput";
 	public static final String BACKEND_COMMON_OUTPUT_ONCE = "backendCommonOutputOnce";
 	
-	
 	public static final String BEAN_OUTPUT = "beanOutput";
 	public static final String BEAN_OUTPUT_ONCE = "beanOutputOnce";
+	
+	public static final String SERVICE_BEAN_OUTPUT= "serviceBeanOutput";
+	public static final String SERVICE_BEAN_OUTPUT_ONCE= "serviceBeanOutputOnce";
+	
+	public static final String HELPER_BEAN_OUTPUT = "helperBeanOutput";
+	public static final String HELPER_BEAN_OUTPUT_ONCE = "helperBeanOutputOnce";
+	
+	public static final String UTIL_BEAN_OUTPUT = "utilBeanOutput";
+	public static final String UTIL_BEAN_OUTPUT_ONCE = "utilBeanOutputOnce";
 	
 	public static final String GEN = "";
 	
@@ -73,8 +81,31 @@ class ModelisationLanguageGenerator extends AbstractGenerator {
 	public static final String JAVA_EXTENSION = ".java";
 	public static final String BEAN_EXTENSION = ".xml";
 	
+	private Map<Class,String> objectStructure;
+	private static final String OBJECT_STRUCTURE_SEPARATOR = "%%"
+	
+	def void initializeObjectStructure()
+	{
+		objectStructure = new HashMap<Class,String>();
+		objectStructure.put(Functionality, "backend")
+	}
+	
+	def String getObjectStructure(Class clazz, String separator)
+	{
+		if(objectStructure.containsKey(clazz)){
+			if(objectStructure.get(clazz) != null && objectStructure.get(clazz).length != 0){
+				return objectStructure.get(clazz).replace(OBJECT_STRUCTURE_SEPARATOR, separator) + separator;
+			}else{
+				return "";
+			}
+		}else{
+			return "";
+		}
+	}
+	
 	@Inject extension IQualifiedNameProvider 
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
+		initializeObjectStructure();
 		generateUtil(resource, fsa);
 		generateService(resource, fsa);
 		generateHelper(resource, fsa);
@@ -181,7 +212,7 @@ class ModelisationLanguageGenerator extends AbstractGenerator {
 			allUtilNames.add(e.name);
         }
         
-        generateBeanConfigurationUsc(Util,allUtilNames, fileSystemAccess, BEAN_OUTPUT, BEAN_OUTPUT_ONCE);
+        generateBeanConfigurationUsc(Util,allUtilNames, fileSystemAccess, UTIL_BEAN_OUTPUT, UTIL_BEAN_OUTPUT_ONCE);
         
 	}
 	
@@ -200,7 +231,7 @@ class ModelisationLanguageGenerator extends AbstractGenerator {
 			generateOnceGenCodeUsc(e,fileSystemAccess, SERVICE_OUTPUT_ONCE, e.methods);
 			allServiceNames.add(e.name);
         }	
-        generateBeanConfigurationUsc(Service,allServiceNames, fileSystemAccess, BEAN_OUTPUT, BEAN_OUTPUT_ONCE);
+        generateBeanConfigurationUsc(Service,allServiceNames, fileSystemAccess, SERVICE_BEAN_OUTPUT, SERVICE_BEAN_OUTPUT_ONCE);
 	}
 	def generateHelper(Resource resource,IFileSystemAccess2 fileSystemAccess)
 	{
@@ -217,7 +248,7 @@ class ModelisationLanguageGenerator extends AbstractGenerator {
 			generateOnceGenCodeUsc(e,fileSystemAccess, HELPER_OUTPUT_ONCE, e.methods);
 			allHelperNames.add(e.name);
         }
-        generateBeanConfigurationUsc(Helper,allHelperNames, fileSystemAccess, BEAN_OUTPUT, BEAN_OUTPUT_ONCE);
+        generateBeanConfigurationUsc(Helper,allHelperNames, fileSystemAccess, HELPER_BEAN_OUTPUT, HELPER_BEAN_OUTPUT_ONCE);
 	}
 	
 	def generateGeneralObjectCmd(IFileSystemAccess2 fileSystemAccess, String outputConfigurationNameGen, String outputConfigurationNameOnce) {
@@ -1180,11 +1211,11 @@ class ModelisationLanguageGenerator extends AbstractGenerator {
 	}
 	def private String getPackageBasicCodeStructure(Class clazz)
 	{
-		return getPackageBasicCodeStructure() + getTypeNameOfObjectForPackage(clazz);
+		return getPackageBasicCodeStructure() + getObjectStructure(clazz, ModelisationLanguageGenerator.PACKAGE_SEPARATOR) + getTypeNameOfObjectForPackage(clazz);
 	}
 	def private String getPackageBasicCodeStructure(EObject eobject)
 	{
-		return getPackageBasicCodeStructure() + getTypeNameOfObjectForPackage(eobject);
+		return getPackageBasicCodeStructure() + getObjectStructure(getInterface(eobject), PACKAGE_SEPARATOR) + getTypeNameOfObjectForPackage(eobject);
 	}
 	def private String getPackageForObject(EObject eobject, String nameObject)
 	{
@@ -1192,7 +1223,7 @@ class ModelisationLanguageGenerator extends AbstractGenerator {
 	}
 	def private String getPackageForObject(Class clazz, String nameObject)
 	{
-		return getPackageBasicCodeStructure() + clazz.simpleName.toFirstLower + PACKAGE_SEPARATOR + nameObject.toFirstLower;
+		return getPackageBasicCodeStructure() + getObjectStructure(clazz, PACKAGE_SEPARATOR) + clazz.simpleName.toFirstLower + PACKAGE_SEPARATOR + nameObject.toFirstLower;
 	}
 	def private String getImportPackageForObject(EObject eobject, String nameObject)
 	{
@@ -1204,7 +1235,7 @@ class ModelisationLanguageGenerator extends AbstractGenerator {
 	}
 	def private String getConfigFolderForObject(Class clazz)
 	{
-		return "config" + PATH_SEPARATOR + "beans" + PATH_SEPARATOR + "backend" + PATH_SEPARATOR + clazz.simpleName.toLowerCase + PATH_SEPARATOR; 	
+		return "config" + PATH_SEPARATOR + "beans" + PATH_SEPARATOR + getObjectStructure(clazz, PATH_SEPARATOR) + clazz.simpleName.toLowerCase + PATH_SEPARATOR; 	
 	}
 	
 	def private String getGenConfigFileNameForObject(Class clazz)

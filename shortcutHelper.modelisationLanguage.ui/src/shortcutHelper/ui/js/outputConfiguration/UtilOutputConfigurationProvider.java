@@ -11,7 +11,8 @@ import shortcutHelper.generator.ModelisationLanguageGenerator;
 
 public class UtilOutputConfigurationProvider implements IOutputConfigurationProvider {
 	private static final String ROOT = "..";
-	private static final String LOCAL_FOLDER_FOR_GENERATION = "/shortcutHelper/shortcutHelper/backend";
+	private static final String LOCAL_FOLDER_FOR_GENERATION = "/shortcutHelper/shortcutHelper";
+	private static final String BACKEND = "/backend";
 	private static final String LOCAL_FOLDER_FOR_BEANS = "/shortcutHelper/application_config";
 	public static final String DEFAULT_OUTPUT_ONCE = "DEFAULT_OUTPUT_ONCE";
 
@@ -73,7 +74,7 @@ public class UtilOutputConfigurationProvider implements IOutputConfigurationProv
 
 		OutputConfiguration onceLogic = new OutputConfiguration(ModelisationLanguageGenerator.LOGIC_OUTPUT);
 		onceLogic.setDescription("Gen Folder");
-		onceLogic.setOutputDirectory(ROOT + LOCAL_FOLDER_FOR_GENERATION + "/logic/" + SRC_GEN_JAVASCRIPT);
+		onceLogic.setOutputDirectory(ROOT + LOCAL_FOLDER_FOR_GENERATION + BACKEND + "/logic/" + SRC_GEN_JAVASCRIPT);
 		onceLogic.setOverrideExistingResources(true);
 		onceLogic.setCreateOutputDirectory(true);
 		onceLogic.setCleanUpDerivedResources(true);
@@ -81,7 +82,7 @@ public class UtilOutputConfigurationProvider implements IOutputConfigurationProv
 
 		OutputConfiguration genLogic = new OutputConfiguration(ModelisationLanguageGenerator.LOGIC_OUTPUT_ONCE);
 		genLogic.setDescription("Output Folder (once)");
-		genLogic.setOutputDirectory(ROOT + LOCAL_FOLDER_FOR_GENERATION + "/logic/" + SRC_GEN_ONCE_JAVASCRIPT);
+		genLogic.setOutputDirectory(ROOT + LOCAL_FOLDER_FOR_GENERATION + BACKEND + "/logic/" + SRC_GEN_ONCE_JAVASCRIPT);
 		genLogic.setOverrideExistingResources(false);
 		genLogic.setCreateOutputDirectory(true);
 		genLogic.setCleanUpDerivedResources(false);
@@ -90,8 +91,8 @@ public class UtilOutputConfigurationProvider implements IOutputConfigurationProv
 		OutputConfiguration onceBackendCommand = new OutputConfiguration(
 				ModelisationLanguageGenerator.FUNCTIONALITY_OUTPUT);
 		onceBackendCommand.setDescription("Gen Folder");
-		onceBackendCommand
-				.setOutputDirectory(ROOT + LOCAL_FOLDER_FOR_GENERATION + "/functionality/" + SRC_GEN_JAVASCRIPT);
+		onceBackendCommand.setOutputDirectory(
+				ROOT + LOCAL_FOLDER_FOR_GENERATION + BACKEND + "/functionality/" + SRC_GEN_JAVASCRIPT);
 		onceBackendCommand.setOverrideExistingResources(true);
 		onceBackendCommand.setCreateOutputDirectory(true);
 		onceBackendCommand.setCleanUpDerivedResources(true);
@@ -100,8 +101,8 @@ public class UtilOutputConfigurationProvider implements IOutputConfigurationProv
 		OutputConfiguration genBackendCommand = new OutputConfiguration(
 				ModelisationLanguageGenerator.FUNCTIONALITY_OUTPUT_ONCE);
 		genBackendCommand.setDescription("Output Folder (once)");
-		genBackendCommand
-				.setOutputDirectory(ROOT + LOCAL_FOLDER_FOR_GENERATION + "/functionality/" + SRC_GEN_ONCE_JAVASCRIPT);
+		genBackendCommand.setOutputDirectory(
+				ROOT + LOCAL_FOLDER_FOR_GENERATION + BACKEND + "/functionality/" + SRC_GEN_ONCE_JAVASCRIPT);
 		genBackendCommand.setOverrideExistingResources(false);
 		genBackendCommand.setCreateOutputDirectory(true);
 		genBackendCommand.setCleanUpDerivedResources(false);
@@ -117,16 +118,68 @@ public class UtilOutputConfigurationProvider implements IOutputConfigurationProv
 
 		OutputConfiguration genBean = new OutputConfiguration(ModelisationLanguageGenerator.BEAN_OUTPUT_ONCE);
 		genBean.setDescription("Output Folder (once)");
-		genBean.setOutputDirectory(ROOT + LOCAL_FOLDER_FOR_BEANS + SRC_GEN_ONCE_CONFIG);
+		genBean.setOutputDirectory(ROOT + LOCAL_FOLDER_FOR_BEANS + BACKEND + SRC_GEN_ONCE_CONFIG);
 		genBean.setOverrideExistingResources(false);
 		genBean.setCreateOutputDirectory(true);
 		genBean.setCleanUpDerivedResources(false);
 		genBean.setSetDerivedProperty(true);
 
+		OutputConfiguration onceServiceBean = new OutputConfiguration(
+				ModelisationLanguageGenerator.SERVICE_BEAN_OUTPUT);
+		onceServiceBean.setDescription("Gen Folder");
+		onceServiceBean.setOutputDirectory(ROOT + LOCAL_FOLDER_FOR_BEANS + SRC_GEN_CONFIG);
+		onceServiceBean.setOverrideExistingResources(true);
+		onceServiceBean.setCreateOutputDirectory(true);
+		onceServiceBean.setCleanUpDerivedResources(true);
+		onceServiceBean.setSetDerivedProperty(true);
+
+		OutputConfiguration genServiceBean = new OutputConfiguration(
+				ModelisationLanguageGenerator.SERVICE_BEAN_OUTPUT_ONCE);
+		genServiceBean.setDescription("Output Folder (once)");
+		genServiceBean.setOutputDirectory(ROOT + LOCAL_FOLDER_FOR_BEANS + SRC_GEN_ONCE_CONFIG);
+		genServiceBean.setOverrideExistingResources(false);
+		genServiceBean.setCreateOutputDirectory(true);
+		genServiceBean.setCleanUpDerivedResources(false);
+		genServiceBean.setSetDerivedProperty(true);
+
+		OutputConfiguration onceUtilBean = new OutputConfiguration(ModelisationLanguageGenerator.UTIL_BEAN_OUTPUT);
+		onceUtilBean.setDescription("Gen Folder");
+		onceUtilBean.setOutputDirectory(ROOT + LOCAL_FOLDER_FOR_BEANS + SRC_GEN_CONFIG);
+		onceUtilBean.setOverrideExistingResources(true);
+		onceUtilBean.setCreateOutputDirectory(true);
+		onceUtilBean.setCleanUpDerivedResources(true);
+		onceUtilBean.setSetDerivedProperty(true);
+
+		OutputConfiguration genUtilBean = new OutputConfiguration(ModelisationLanguageGenerator.UTIL_BEAN_OUTPUT_ONCE);
+		genUtilBean.setDescription("Output Folder (once)");
+		genUtilBean.setOutputDirectory(ROOT + LOCAL_FOLDER_FOR_BEANS + SRC_GEN_ONCE_CONFIG);
+		genUtilBean.setOverrideExistingResources(false);
+		genUtilBean.setCreateOutputDirectory(true);
+		genUtilBean.setCleanUpDerivedResources(false);
+		genUtilBean.setSetDerivedProperty(true);
+
+		OutputConfiguration onceHelperBean = new OutputConfiguration(ModelisationLanguageGenerator.HELPER_BEAN_OUTPUT);
+		onceHelperBean.setDescription("Gen Folder");
+		onceHelperBean.setOutputDirectory(ROOT + LOCAL_FOLDER_FOR_BEANS + SRC_GEN_CONFIG);
+		onceHelperBean.setOverrideExistingResources(true);
+		onceHelperBean.setCreateOutputDirectory(true);
+		onceHelperBean.setCleanUpDerivedResources(true);
+		onceHelperBean.setSetDerivedProperty(true);
+
+		OutputConfiguration genHelperBean = new OutputConfiguration(
+				ModelisationLanguageGenerator.HELPER_BEAN_OUTPUT_ONCE);
+		genHelperBean.setDescription("Output Folder (once)");
+		genHelperBean.setOutputDirectory(ROOT + LOCAL_FOLDER_FOR_BEANS + SRC_GEN_ONCE_CONFIG);
+		genHelperBean.setOverrideExistingResources(false);
+		genHelperBean.setCreateOutputDirectory(true);
+		genHelperBean.setCleanUpDerivedResources(false);
+		genHelperBean.setSetDerivedProperty(true);
+
 		OutputConfiguration backendCommon = new OutputConfiguration(
 				ModelisationLanguageGenerator.BACKEND_COMMON_OUTPUT);
 		backendCommon.setDescription("Gen Folder");
-		backendCommon.setOutputDirectory(ROOT + LOCAL_FOLDER_FOR_GENERATION + "/backendCommon/" + SRC_GEN_JAVASCRIPT);
+		backendCommon.setOutputDirectory(
+				ROOT + LOCAL_FOLDER_FOR_GENERATION + BACKEND + "/backendCommon/" + SRC_GEN_JAVASCRIPT);
 		backendCommon.setOverrideExistingResources(true);
 		backendCommon.setCreateOutputDirectory(true);
 		backendCommon.setCleanUpDerivedResources(true);
@@ -135,15 +188,16 @@ public class UtilOutputConfigurationProvider implements IOutputConfigurationProv
 		OutputConfiguration backendCommonOnce = new OutputConfiguration(
 				ModelisationLanguageGenerator.BACKEND_COMMON_OUTPUT_ONCE);
 		backendCommonOnce.setDescription("Output Folder (once)");
-		backendCommonOnce
-				.setOutputDirectory(ROOT + LOCAL_FOLDER_FOR_GENERATION + "/backendCommon/" + SRC_GEN_ONCE_JAVASCRIPT);
+		backendCommonOnce.setOutputDirectory(
+				ROOT + LOCAL_FOLDER_FOR_GENERATION + BACKEND + "/backendCommon/" + SRC_GEN_ONCE_JAVASCRIPT);
 		backendCommonOnce.setOverrideExistingResources(false);
 		backendCommonOnce.setCreateOutputDirectory(true);
 		backendCommonOnce.setCleanUpDerivedResources(false);
 		backendCommonOnce.setSetDerivedProperty(true);
 
 		return newHashSet(genUtil, onceUtil, genService, onceService, genHelper, onceHelper, onceLogic, genLogic,
-				onceBackendCommand, genBackendCommand, onceBean, genBean, backendCommon, backendCommonOnce);
+				onceBackendCommand, genBackendCommand, onceBean, genBean, onceServiceBean, genServiceBean, onceUtilBean,
+				genUtilBean, onceHelperBean, genHelperBean, backendCommon, backendCommonOnce);
 	}
 
 }
