@@ -6,9 +6,9 @@ import org.eclipse.emf.common.util.BasicEList
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.resource.IEObjectDescription
-import shortcutHelper.modelisationLanguage.Backendcommand
 import shortcutHelper.modelisationLanguage.Command
 import shortcutHelper.modelisationLanguage.ConditionImplementation
+import shortcutHelper.modelisationLanguage.Functionality
 import shortcutHelper.modelisationLanguage.Helper
 import shortcutHelper.modelisationLanguage.Implementation
 import shortcutHelper.modelisationLanguage.ImplementationLine
@@ -26,7 +26,7 @@ class ImplementationUtil {
 	 */
 	def static EObject getRootParentImplementation(EObject eobject){
 		var EObject rootParent = eobject.eContainer;
-		while(!(rootParent instanceof Logic || rootParent instanceof Backendcommand)){
+		while(!(rootParent instanceof Logic || rootParent instanceof Functionality)){
 			rootParent = rootParent.eContainer;
 		}
 		return rootParent;
@@ -37,7 +37,7 @@ class ImplementationUtil {
 		if(object instanceof Logic){
 			usingSystemKomponentObject = object.usingSystemKomponent; 
 		}
-		if(object instanceof Backendcommand){					
+		if(object instanceof Functionality){					
 			usingSystemKomponentObject = object.usingSystemKomponent; 
 		}
 		return usingSystemKomponentObject;

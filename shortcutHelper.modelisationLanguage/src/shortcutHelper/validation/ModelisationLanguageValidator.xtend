@@ -15,7 +15,6 @@ import org.eclipse.xtext.validation.Check
 import shortcutHelper.modelisationLanguage.AttribuableValue
 import shortcutHelper.modelisationLanguage.BackendParameter
 import shortcutHelper.modelisationLanguage.BackendParameterDeclaration
-import shortcutHelper.modelisationLanguage.Backendcommand
 import shortcutHelper.modelisationLanguage.CallComponentMethod
 import shortcutHelper.modelisationLanguage.CallLogic
 import shortcutHelper.modelisationLanguage.Command
@@ -23,6 +22,7 @@ import shortcutHelper.modelisationLanguage.CommandParameter
 import shortcutHelper.modelisationLanguage.CommandParameterReference
 import shortcutHelper.modelisationLanguage.ComponentBackendParameterValueAttribut
 import shortcutHelper.modelisationLanguage.ConditionImplementation
+import shortcutHelper.modelisationLanguage.Functionality
 import shortcutHelper.modelisationLanguage.Helper
 import shortcutHelper.modelisationLanguage.Implementation
 import shortcutHelper.modelisationLanguage.ImplementationLine
@@ -84,13 +84,13 @@ class ModelisationLanguageValidator extends AbstractModelisationLanguageValidato
 	
 	@Check
 	def checkCommandParameterTowarsBackendCommand(Command command){
-		val Backendcommand backendCommand = command.backendCommand;
+		val Functionality functionality = command.functionality;
 		val List<CommandParameter> parameters = command.parameters;
-		if(backendCommand != null && backendCommand.parameterDeclaration.parameters != null && backendCommand.parameterDeclaration.parameters.size != 0){
+		if(functionality != null && functionality.parameterDeclaration.parameters != null && functionality.parameterDeclaration.parameters.size != 0){
 			
 			val HashMap<String,BackendParameter> mapBackendParameters = CollectionLiterals.newHashMap;
 			
-			for(backendParameter: backendCommand.parameterDeclaration.parameters){
+			for(backendParameter: functionality.parameterDeclaration.parameters){
 				mapBackendParameters.put(backendParameter.name,backendParameter);
 			}
 			

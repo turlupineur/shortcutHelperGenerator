@@ -163,7 +163,7 @@ class ModelisationLanguageScopeProvider extends AbstractModelisationLanguageScop
 				val BackendParameterReference backendParameterReference = context;
 				val Command command = backendParameterReference.eContainer.eContainer as Command;
 				val IScope parentScope = globalScopeProvider.getScope(context.eResource,reference,null);
-				return Scopes.scopeFor(command.backendCommand.parameterDeclaration.parameters,parentScope);
+				return Scopes.scopeFor(command.functionality.parameterDeclaration.parameters,parentScope);
 			}
 		}
 		

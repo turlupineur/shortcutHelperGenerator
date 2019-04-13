@@ -20,7 +20,7 @@ import org.eclipse.xtext.generator.IGeneratorContext
 import org.eclipse.xtext.naming.IQualifiedNameProvider
 import shortcutHelper.modelisationLanguage.BackendParameter
 import shortcutHelper.modelisationLanguage.BackendParameterDeclaration
-import shortcutHelper.modelisationLanguage.Backendcommand
+import shortcutHelper.modelisationLanguage.Functionality
 import shortcutHelper.modelisationLanguage.Helper
 import shortcutHelper.modelisationLanguage.Logic
 import shortcutHelper.modelisationLanguage.Method
@@ -52,8 +52,8 @@ class ModelisationLanguageGenerator extends AbstractGenerator {
 	public static final String LOGIC_OUTPUT = "logicOutput";
 	public static final String LOGIC_OUTPUT_ONCE = "logicOutputOnce";
 	
-	public static final String BACKEND_COMMAND_OUTPUT = "backendCommandOutput";
-	public static final String BACKEND_COMMAND_OUTPUT_ONCE = "backendCommandOutputOnce";
+	public static final String FUNCTIONALITY_OUTPUT = "functionalityOutput";
+	public static final String FUNCTIONALITY_OUTPUT_ONCE = "functionalityOutputOnce";
 	
 	public static final String BACKEND_COMMON_OUTPUT = "backendCommonOutput";
 	public static final String BACKEND_COMMON_OUTPUT_ONCE = "backendCommonOutputOnce";
@@ -81,40 +81,40 @@ class ModelisationLanguageGenerator extends AbstractGenerator {
 		generateLogic(resource,fsa);
 		
 		if(resource.allContents.toIterable.filter(Logic).size != 0 || 
-		   resource.allContents.toIterable.filter(Backendcommand).size != 0)
+		   resource.allContents.toIterable.filter(Functionality).size != 0)
 		{
 			generateGeneralObjectCmd(fsa,BACKEND_COMMON_OUTPUT,BACKEND_COMMON_OUTPUT_ONCE);
 		}
 		
-		generateBackendCommand(resource,fsa);
+		generateFunctionality(resource,fsa);
 	}
 	
-	def generateBackendCommand(Resource resource, IFileSystemAccess2 fileSystemAccess) {
-		if(resource.allContents.toIterable.filter(Backendcommand).size == 0)
+	def generateFunctionality(Resource resource, IFileSystemAccess2 fileSystemAccess) {
+		if(resource.allContents.toIterable.filter(Functionality).size == 0)
 		{
 			return;
 		}
-		val List<Backendcommand> allBackendCommands = new ArrayList<Backendcommand>();
-		val List<String> allCommandNames = new ArrayList<String>();
+		val List<Functionality> allFunctionalities = new ArrayList<Functionality>();
+		val List<String> allFunctionalityNames = new ArrayList<String>();
 		val Map<String,List<String>> uskNames = new HashMap<String,List<String>>();
-		generateBasicCodeStructureGenClassRunnableComponent(Backendcommand,fileSystemAccess, BACKEND_COMMAND_OUTPUT);
-		generateBasicCodeStructureGenAbstractClassRunnableComponent(Backendcommand,fileSystemAccess, BACKEND_COMMAND_OUTPUT_ONCE);
-		generateBasicCodeStructureResultRunnableComponent(Backendcommand, fileSystemAccess, BACKEND_COMMAND_OUTPUT);
-		generateDataContainerBasicCodeStructureGenClass(Backendcommand,fileSystemAccess, BACKEND_COMMAND_OUTPUT);
-		generateDataContainerCreatorBasicCodeStructureGenClass(Backendcommand,fileSystemAccess, BACKEND_COMMAND_OUTPUT);
-		generateDataContainerDataExtractorBasicCodeStructureGenClass(Backendcommand,fileSystemAccess, BACKEND_COMMAND_OUTPUT);
-		for (e : resource.allContents.toIterable.filter(Backendcommand)) {
-			generateBeanRunnableComp(e,e.name,e.parameterDeclaration,fileSystemAccess,BACKEND_COMMAND_OUTPUT)
-			generateDataContainerRunnableComp(e,e.parameterDeclaration,fileSystemAccess,e.name,BACKEND_COMMAND_OUTPUT);
-			generateDataContainerAbstractCreatorRunnableComp(e,e.name,fileSystemAccess,BACKEND_COMMAND_OUTPUT_ONCE);
-			generateDataContainerCreatorRunnableComp(e,e.name,fileSystemAccess,BACKEND_COMMAND_OUTPUT_ONCE);
-			generateMainInterfaceGenRunnableComp(e,e.name,fileSystemAccess,BACKEND_COMMAND_OUTPUT);
-			generateAbstractMainClassGenRunnableComp(e,e.name, e.usingSystemKomponent,fileSystemAccess,BACKEND_COMMAND_OUTPUT);
-			generateAbstractMainClassOnceRunnableComp(e,e.name,fileSystemAccess,BACKEND_COMMAND_OUTPUT_ONCE);
-			generateMainClassOnceImplRunnableComp(e,e.name,fileSystemAccess,BACKEND_COMMAND_OUTPUT_ONCE);
-			generateDataExtractorCommand(e,fileSystemAccess);
-			generateBeanCommandDataExtractor(e,fileSystemAccess, BACKEND_COMMAND_OUTPUT);
-			allCommandNames.add(e.name);
+		generateBasicCodeStructureGenClassRunnableComponent(Functionality,fileSystemAccess, shortcutHelper.generator.ModelisationLanguageGenerator.FUNCTIONALITY_OUTPUT);
+		generateBasicCodeStructureGenAbstractClassRunnableComponent(Functionality,fileSystemAccess, shortcutHelper.generator.ModelisationLanguageGenerator.FUNCTIONALITY_OUTPUT_ONCE);
+		generateBasicCodeStructureResultRunnableComponent(Functionality, fileSystemAccess, shortcutHelper.generator.ModelisationLanguageGenerator.FUNCTIONALITY_OUTPUT);
+		generateDataContainerBasicCodeStructureGenClass(Functionality,fileSystemAccess, shortcutHelper.generator.ModelisationLanguageGenerator.FUNCTIONALITY_OUTPUT);
+		generateDataContainerCreatorBasicCodeStructureGenClass(Functionality,fileSystemAccess, shortcutHelper.generator.ModelisationLanguageGenerator.FUNCTIONALITY_OUTPUT);
+		generateDataContainerDataExtractorBasicCodeStructureGenClass(Functionality,fileSystemAccess, shortcutHelper.generator.ModelisationLanguageGenerator.FUNCTIONALITY_OUTPUT);
+		for (e : resource.allContents.toIterable.filter(Functionality)) {
+			generateBeanRunnableComp(e,e.name,e.parameterDeclaration,fileSystemAccess,shortcutHelper.generator.ModelisationLanguageGenerator.FUNCTIONALITY_OUTPUT)
+			generateDataContainerRunnableComp(e,e.parameterDeclaration,fileSystemAccess,e.name,shortcutHelper.generator.ModelisationLanguageGenerator.FUNCTIONALITY_OUTPUT);
+			generateDataContainerAbstractCreatorRunnableComp(e,e.name,fileSystemAccess,shortcutHelper.generator.ModelisationLanguageGenerator.FUNCTIONALITY_OUTPUT_ONCE);
+			generateDataContainerCreatorRunnableComp(e,e.name,fileSystemAccess,shortcutHelper.generator.ModelisationLanguageGenerator.FUNCTIONALITY_OUTPUT_ONCE);
+			generateMainInterfaceGenRunnableComp(e,e.name,fileSystemAccess,shortcutHelper.generator.ModelisationLanguageGenerator.FUNCTIONALITY_OUTPUT);
+			generateAbstractMainClassGenRunnableComp(e,e.name, e.usingSystemKomponent,fileSystemAccess,shortcutHelper.generator.ModelisationLanguageGenerator.FUNCTIONALITY_OUTPUT);
+			generateAbstractMainClassOnceRunnableComp(e,e.name,fileSystemAccess,shortcutHelper.generator.ModelisationLanguageGenerator.FUNCTIONALITY_OUTPUT_ONCE);
+			generateMainClassOnceImplRunnableComp(e,e.name,fileSystemAccess,shortcutHelper.generator.ModelisationLanguageGenerator.FUNCTIONALITY_OUTPUT_ONCE);
+			generateDataExtractorFunctionality(e,fileSystemAccess);
+			generateBeanFunctionalityDataExtractor(e,fileSystemAccess, shortcutHelper.generator.ModelisationLanguageGenerator.FUNCTIONALITY_OUTPUT);
+			allFunctionalityNames.add(e.name);
 			if(e.usingSystemKomponent != null && e.usingSystemKomponent.components != null){
 				val List<String> allUsingSystemKomponentNames = new ArrayList<String>();
 				for(UsableSystemComponent usc: e.usingSystemKomponent.components)
@@ -123,10 +123,10 @@ class ModelisationLanguageGenerator extends AbstractGenerator {
 				}
 				uskNames.put(e.name,allUsingSystemKomponentNames);
 			}
-			allBackendCommands.add(e);
+			allFunctionalities.add(e);
         }
-        generateBeanConfigurationRunnableComp(Backendcommand,allCommandNames, uskNames, fileSystemAccess, BEAN_OUTPUT, BEAN_OUTPUT_ONCE, false);
-        generateBeanConfigurationExtractor(allBackendCommands,fileSystemAccess,BEAN_OUTPUT, BEAN_OUTPUT_ONCE);
+        generateBeanConfigurationRunnableComp(Functionality,allFunctionalityNames, uskNames, fileSystemAccess, BEAN_OUTPUT, BEAN_OUTPUT_ONCE, false);
+        generateBeanConfigurationExtractor(allFunctionalities,fileSystemAccess,BEAN_OUTPUT, BEAN_OUTPUT_ONCE);
 	}
 	def generateLogic(Resource resource, IFileSystemAccess2 fileSystemAccess) {
 		if(resource.allContents.toIterable.filter(Logic).size == 0)
@@ -235,9 +235,9 @@ class ModelisationLanguageGenerator extends AbstractGenerator {
 //		generateDataContainerImplGenClassRunnableComp(eobject,declaration,fileSystemAccess,objectName,outputConfigurationName);
 	}
 	
-	def generateBeanCommandDataExtractor(Backendcommand backendCommand, IFileSystemAccess2 fileSystemAccess, String outputConfigurationName)
+	def generateBeanFunctionalityDataExtractor(Functionality functionality, IFileSystemAccess2 fileSystemAccess, String outputConfigurationName)
 	{
-		generateDataContainerDataExtractorInterfaceGenCommand(backendCommand,fileSystemAccess);
+		generateDataContainerDataExtractorInterfaceGenFunctionality(functionality,fileSystemAccess);
 	}
 	
 	
@@ -273,19 +273,19 @@ class ModelisationLanguageGenerator extends AbstractGenerator {
 		generateOnceImplUsc(usc,fileSystemAccess,outputConfigurationName,methods);
 	}
 	
-	def generateBeanConfigurationExtractor(List<Backendcommand> allBackendCommands,IFileSystemAccess2 fileSystemAccess,String outputConfigurationName, String outputConfigurationNameOnce)
+	def generateBeanConfigurationExtractor(List<Functionality> allFunctionalities,IFileSystemAccess2 fileSystemAccess,String outputConfigurationName, String outputConfigurationNameOnce)
 	{
 		// gen
 		
 		fileSystemAccess.generateFile(
-             getConfigFolderForObject(Backendcommand) + getGenConfigFileNameDataContainerDataExtractorForObject(Backendcommand)+ BEAN_EXTENSION,outputConfigurationName,
-             compileBeanXmlGenConfigDataContainerDataExtractorRunnableComponent(Backendcommand,allBackendCommands));
+             getConfigFolderForObject(Functionality) + getGenConfigFileNameDataContainerDataExtractorForObject(Functionality)+ BEAN_EXTENSION,outputConfigurationName,
+             compileBeanXmlGenConfigDataContainerDataExtractorRunnableComponent(Functionality,allFunctionalities));
         
         // once
         
         fileSystemAccess.generateFile(
-             getConfigFolderForObject(Backendcommand) + getOnceGenConfigFileNameDataContainerDataExtractorForObject(Backendcommand)+ BEAN_EXTENSION,outputConfigurationNameOnce,
-             compileBeanXmlGenConfigDataContainerDataExtractorManRunnableComponent(Backendcommand));
+             getConfigFolderForObject(Functionality) + getOnceGenConfigFileNameDataContainerDataExtractorForObject(Functionality)+ BEAN_EXTENSION,outputConfigurationNameOnce,
+             compileBeanXmlGenConfigDataContainerDataExtractorManRunnableComponent(Functionality));
 	}
 	
 	def generateBeanConfigurationRunnableComp(Class clazz, List<String> allRCNames,Map<String,List<String>> mapUsingSystemKomponentNames, IFileSystemAccess2 fileSystemAccess, String outputConfigurationNameGen, String outputConfigurationNameOnce, boolean generateCreator)
@@ -320,39 +320,39 @@ class ModelisationLanguageGenerator extends AbstractGenerator {
              compileAbstractMainClassGenRunnableComp(eobject,nameObject,usingSystemComponent));
 	}
 	
-	def generateDataExtractorCommand(Backendcommand backendCommand, IFileSystemAccess2 fileSystemAccess)
+	def generateDataExtractorFunctionality(Functionality functionality, IFileSystemAccess2 fileSystemAccess)
 	{
-		generateDataContainerDataExtractorAbstractGenCommand(backendCommand,fileSystemAccess);		
-		generateDataExtractorImplOnceCommand(backendCommand,fileSystemAccess);
+		generateDataContainerDataExtractorAbstractGenFunctionality(functionality,fileSystemAccess);		
+		generateDataExtractorImplOnceFunctionality(functionality,fileSystemAccess);
 	}
 	
-	def generateDataContainerDataExtractorGeneralInterfaceGenCommand(Class clazz, IFileSystemAccess2 fileSystemAccess)
-	{
-		fileSystemAccess.generateFile(
-             getPackageBasicCodeStructureFolder(clazz) + getDataContainerDataExtractorGeneralInterfaceGenName()+ JAVA_EXTENSION,BACKEND_COMMAND_OUTPUT,
-             compileDataContainerDataExtractorGeneralInterfaceGenCommand(clazz));
-	}
-	
-	def generateDataContainerDataExtractorAbstractGenCommand(Backendcommand backendCommand,IFileSystemAccess2 fileSystemAccess)
+	def generateDataContainerDataExtractorGeneralInterfaceGenFunctionality(Class clazz, IFileSystemAccess2 fileSystemAccess)
 	{
 		fileSystemAccess.generateFile(
-             getPackageForObjectFolder(backendCommand,backendCommand.name) + getDataContainerDataExtractorGenName(backendCommand)+ JAVA_EXTENSION,BACKEND_COMMAND_OUTPUT,
-             compileDataContainerDataExtractorAbstractGenCommand(backendCommand));
+             getPackageBasicCodeStructureFolder(clazz) + getDataContainerDataExtractorGeneralInterfaceGenName()+ JAVA_EXTENSION,shortcutHelper.generator.ModelisationLanguageGenerator.FUNCTIONALITY_OUTPUT,
+             compileDataContainerDataExtractorGeneralInterfaceGenFunctionality(clazz));
 	}
 	
-	def generateDataExtractorImplOnceCommand(Backendcommand backendCommand, IFileSystemAccess2 fileSystemAccess)
+	def generateDataContainerDataExtractorAbstractGenFunctionality(Functionality functionality,IFileSystemAccess2 fileSystemAccess)
+	{
+		fileSystemAccess.generateFile(
+             getPackageForObjectFolder(functionality,functionality.name) + getDataContainerDataExtractorGenName(functionality)+ JAVA_EXTENSION,shortcutHelper.generator.ModelisationLanguageGenerator.FUNCTIONALITY_OUTPUT,
+             compileDataContainerDataExtractorAbstractGenFunctionality(functionality));
+	}
+	
+	def generateDataExtractorImplOnceFunctionality(Functionality functionality, IFileSystemAccess2 fileSystemAccess)
 	{		
 		fileSystemAccess.generateFile(
-             getPackageForObjectFolder(backendCommand,backendCommand.name) + getDataContainerDataExtractorOnceImplName(getInterface(backendCommand),backendCommand.name)+ JAVA_EXTENSION,BACKEND_COMMAND_OUTPUT_ONCE,
-             compileDataContainerDataExtractor(backendCommand));
+             getPackageForObjectFolder(functionality,functionality.name) + getDataContainerDataExtractorOnceImplName(getInterface(functionality),functionality.name)+ JAVA_EXTENSION,shortcutHelper.generator.ModelisationLanguageGenerator.FUNCTIONALITY_OUTPUT_ONCE,
+             compileDataContainerDataExtractor(functionality));
 	}
 	
-	def generateDataContainerDataExtractorInterfaceGenCommand(Backendcommand backendCommand, IFileSystemAccess2 fileSystemAccess)
+	def generateDataContainerDataExtractorInterfaceGenFunctionality(Functionality functionality, IFileSystemAccess2 fileSystemAccess)
 	{
 		
 		fileSystemAccess.generateFile(
-             getPackageForObjectFolder(backendCommand,backendCommand.name) + getDataContainerDataExtractorInterfaceGenName(backendCommand)+ JAVA_EXTENSION,BACKEND_COMMAND_OUTPUT,
-             compileDataContainerDataExtractorInterfaceGenCommand(backendCommand));
+             getPackageForObjectFolder(functionality,functionality.name) + getDataContainerDataExtractorInterfaceGenName(functionality)+ JAVA_EXTENSION,shortcutHelper.generator.ModelisationLanguageGenerator.FUNCTIONALITY_OUTPUT,
+             compileDataContainerDataExtractorInterfaceGenFunctionality(functionality));
 	}
 	
 	
@@ -364,7 +364,7 @@ class ModelisationLanguageGenerator extends AbstractGenerator {
 	}
 	
 	def generateMainInterfaceGenRunnableComp(EObject eobject, String nameObject, IFileSystemAccess2 fileSystemAccess, String outputConfigurationName){
-		// The call of interfaceOnce is right in this case (for Logic and BackendCommand).
+		// The call of interfaceOnce is right in this case (for Logic and Functionality).
 		fileSystemAccess.generateFile(
              getPackageForObjectFolder(eobject,nameObject) + getInterfaceOnceName(nameObject,eobject)+ JAVA_EXTENSION,outputConfigurationName,
              compileInterfaceRunnableComp(eobject,nameObject));
@@ -443,7 +443,7 @@ class ModelisationLanguageGenerator extends AbstractGenerator {
 	}
 	def generateDataContainerDataExtractorBasicCodeStructureGenClass(Class clazz, IFileSystemAccess2 fileSystemAccess, String outputConfigurationName) {
 		
-		generateDataContainerDataExtractorGeneralInterfaceGenCommand(clazz, fileSystemAccess);
+		generateDataContainerDataExtractorGeneralInterfaceGenFunctionality(clazz, fileSystemAccess);
 	}
 	
 	def generateBean(UsableSystemComponent usc,IFileSystemAccess2 fileSystemAccess, String outputConfigurationName, List<Method> methods) {
@@ -575,7 +575,7 @@ class ModelisationLanguageGenerator extends AbstractGenerator {
 		}
 	'''
 	
-	def compileBeanXmlGenConfigDataContainerDataExtractorRunnableComponent(Class clazz, List<Backendcommand> allBackendCommands)
+	def compileBeanXmlGenConfigDataContainerDataExtractorRunnableComponent(Class clazz, List<Functionality> allFunctionalities)
 	'''
 		<?xml version = "1.0" encoding = "UTF-8"?>
 				
@@ -584,8 +584,8 @@ class ModelisationLanguageGenerator extends AbstractGenerator {
 		   xsi:schemaLocation = "http://www.springframework.org/schema/beans
 		   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 		
-			«FOR backendCommand:allBackendCommands»
-				   <bean id = "«getBeanDataContainerDataExtractorGenName(clazz, backendCommand.name)»" class = "«getPackageForObject(clazz,backendCommand.name) + PACKAGE_SEPARATOR + getDataContainerDataExtractorOnceImplName(getInterface(backendCommand),backendCommand.name)»">
+			«FOR backendFunctioality:allFunctionalities»
+				   <bean id = "«getBeanDataContainerDataExtractorGenName(clazz, backendFunctioality.name)»" class = "«getPackageForObject(clazz,backendFunctioality.name) + PACKAGE_SEPARATOR + getDataContainerDataExtractorOnceImplName(getInterface(backendFunctioality),backendFunctioality.name)»">
 				   </bean>
 			«ENDFOR»
 		   
@@ -701,19 +701,19 @@ class ModelisationLanguageGenerator extends AbstractGenerator {
 		}
 	'''
 	
-	def compileDataContainerDataExtractorInterfaceGenCommand(Backendcommand backendCommand)
+	def compileDataContainerDataExtractorInterfaceGenFunctionality(Functionality functionality)
 	'''
-		package «getPackageForObject(backendCommand, backendCommand.name)»;
+		package «getPackageForObject(functionality, functionality.name)»;
 		
-		import «getPackageBasicCodeStructure(getInterface(backendCommand)) + PACKAGE_SEPARATOR + getDataContainerDataExtractorGeneralInterfaceGenName()»;
+		import «getPackageBasicCodeStructure(getInterface(functionality)) + PACKAGE_SEPARATOR + getDataContainerDataExtractorGeneralInterfaceGenName()»;
 		
-		public interface «getDataContainerDataExtractorInterfaceGenName(backendCommand)» extends «getDataContainerDataExtractorGeneralInterfaceGenName()»{
+		public interface «getDataContainerDataExtractorInterfaceGenName(functionality)» extends «getDataContainerDataExtractorGeneralInterfaceGenName()»{
 			
-			public static final String BEAN_ID = "«getBeanDataContainerDataExtractorGenName(getInterface(backendCommand),backendCommand.name)»";
+			public static final String BEAN_ID = "«getBeanDataContainerDataExtractorGenName(getInterface(functionality),functionality.name)»";
 			
 		}
 	'''
-	def compileDataContainerDataExtractorGeneralInterfaceGenCommand(Class clazz)
+	def compileDataContainerDataExtractorGeneralInterfaceGenFunctionality(Class clazz)
 	'''
 		package «getPackageBasicCodeStructure(clazz)»;
 		
@@ -723,23 +723,23 @@ class ModelisationLanguageGenerator extends AbstractGenerator {
 			
 		}
 	'''
-	def compileDataContainerDataExtractorAbstractGenCommand(Backendcommand backendCommand)
+	def compileDataContainerDataExtractorAbstractGenFunctionality(Functionality functionality)
 	'''
-	package «getPackageForObject(backendCommand, backendCommand.name)»;
+	package «getPackageForObject(functionality, functionality.name)»;
 		
-	public abstract class «getDataContainerDataExtractorGenName(backendCommand)» implements «getDataContainerDataExtractorInterfaceGenName(backendCommand)»{
+	public abstract class «getDataContainerDataExtractorGenName(functionality)» implements «getDataContainerDataExtractorInterfaceGenName(functionality)»{
 			
 	}
 	'''
 	
-	def compileDataContainerDataExtractor(Backendcommand backendCommand)
+	def compileDataContainerDataExtractor(Functionality functionality)
 	'''
-		package «getPackageForObject(backendCommand,backendCommand.name)»;
+		package «getPackageForObject(functionality,functionality.name)»;
 		
-		import «getPackageBasicCodeStructure(getInterface(backendCommand)) + PACKAGE_SEPARATOR + getDataContainerGenName(getInterface(backendCommand))»;
+		import «getPackageBasicCodeStructure(getInterface(functionality)) + PACKAGE_SEPARATOR + getDataContainerGenName(getInterface(functionality))»;
 		
-		public class «getDataContainerDataExtractorOnceImplName(getInterface(backendCommand),backendCommand.name)» extends «getDataContainerDataExtractorGenName(backendCommand)»{
-			public void extractData(String [] rawData, «getDataContainerGenName(getInterface(backendCommand))» c)
+		public class «getDataContainerDataExtractorOnceImplName(getInterface(functionality),functionality.name)» extends «getDataContainerDataExtractorGenName(functionality)»{
+			public void extractData(String [] rawData, «getDataContainerGenName(getInterface(functionality))» c)
 			{
 				// implement here
 			}
@@ -1066,8 +1066,8 @@ class ModelisationLanguageGenerator extends AbstractGenerator {
 	def private String getInterfaceOnceName(String nameOfObject, EObject o)
 	{
 		// Special case. Services, Helpers and Util have an interface that can be modified. Not a Logic or 
-		// BackendCommand.
-		if(o instanceof Logic || o instanceof Backendcommand)
+		// Functionality.
+		if(o instanceof Logic || o instanceof Functionality)
 		{
 			return this.getInterfaceGenName(nameOfObject);
 		}else{
@@ -1090,17 +1090,17 @@ class ModelisationLanguageGenerator extends AbstractGenerator {
 	{
 		return nameObject.toFirstUpper + "Impl";
 	}
-	def private String getDataContainerDataExtractorGenName(Backendcommand backendCommand)
+	def private String getDataContainerDataExtractorGenName(Functionality functionality)
 	{
-		return "Abstract" + backendCommand.name.toFirstUpper + getDataContainerDataExtractorGeneralInterfaceGenName();
+		return "Abstract" + functionality.name.toFirstUpper + getDataContainerDataExtractorGeneralInterfaceGenName();
 	}
 	def private String getDataContainerDataExtractorGeneralInterfaceGenName()
 	{
 		return "DataContainerDataExtractor";
 	}
-	def private String getDataContainerDataExtractorInterfaceGenName(Backendcommand backendCommand)
+	def private String getDataContainerDataExtractorInterfaceGenName(Functionality functionality)
 	{
-		return "I" + getDataContainerDataExtractorGenName(backendCommand).replace("Abstract","")
+		return "I" + getDataContainerDataExtractorGenName(functionality).replace("Abstract","")
 	}
 	def private String getDataContainerDataExtractorOnceImplName(Class clazz,String nameObject)
 	{

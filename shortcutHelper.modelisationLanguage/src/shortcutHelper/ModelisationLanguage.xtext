@@ -9,7 +9,7 @@ Root:
 	utils+=Util*
 	helpers+=Helper*
 	logics+=Logic*
-	Backendcommands+=Backendcommand*
+	Functionalities+=Functionality*
 	(commands+=Command)*
 	(shortcuts+=Shortcut)*
 ;
@@ -29,15 +29,15 @@ BasicType:
 ;
 
 Command: 
-	'Command' name=ID 'implementedby' backendCommand=[Backendcommand] 'withparam' '{'
+	'Command' name=ID 'implementedby' functionality=[Functionality] 'withparam' '{'
 		description=Description?
 		noParameter=NoParameter?
 		(parameters+=CommandParameter)*
 	'}'
 ;
 
-Backendcommand:
-	'backendcommand' name=ID '{'
+Functionality:
+	'functionality' name=ID '{'
 		description=Description?
 		usingSystemKomponent=UsingSystemKomponent
 		parameterDeclaration=BackendParameterDeclaration

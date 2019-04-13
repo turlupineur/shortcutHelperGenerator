@@ -88,20 +88,20 @@ public class UtilOutputConfigurationProvider implements IOutputConfigurationProv
 		genLogic.setSetDerivedProperty(true);
 
 		OutputConfiguration onceBackendCommand = new OutputConfiguration(
-				ModelisationLanguageGenerator.BACKEND_COMMAND_OUTPUT);
+				ModelisationLanguageGenerator.FUNCTIONALITY_OUTPUT);
 		onceBackendCommand.setDescription("Gen Folder");
 		onceBackendCommand
-				.setOutputDirectory(ROOT + LOCAL_FOLDER_FOR_GENERATION + "/backendCommand/" + SRC_GEN_JAVASCRIPT);
+				.setOutputDirectory(ROOT + LOCAL_FOLDER_FOR_GENERATION + "/functionality/" + SRC_GEN_JAVASCRIPT);
 		onceBackendCommand.setOverrideExistingResources(true);
 		onceBackendCommand.setCreateOutputDirectory(true);
 		onceBackendCommand.setCleanUpDerivedResources(true);
 		onceBackendCommand.setSetDerivedProperty(true);
 
 		OutputConfiguration genBackendCommand = new OutputConfiguration(
-				ModelisationLanguageGenerator.BACKEND_COMMAND_OUTPUT_ONCE);
+				ModelisationLanguageGenerator.FUNCTIONALITY_OUTPUT_ONCE);
 		genBackendCommand.setDescription("Output Folder (once)");
 		genBackendCommand
-				.setOutputDirectory(ROOT + LOCAL_FOLDER_FOR_GENERATION + "/backendCommand/" + SRC_GEN_ONCE_JAVASCRIPT);
+				.setOutputDirectory(ROOT + LOCAL_FOLDER_FOR_GENERATION + "/functionality/" + SRC_GEN_ONCE_JAVASCRIPT);
 		genBackendCommand.setOverrideExistingResources(false);
 		genBackendCommand.setCreateOutputDirectory(true);
 		genBackendCommand.setCleanUpDerivedResources(false);
