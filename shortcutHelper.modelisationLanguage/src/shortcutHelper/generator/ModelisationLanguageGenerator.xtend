@@ -942,7 +942,7 @@ class ModelisationLanguageGenerator extends AbstractGenerator {
 		
 		import «getPackageBasicCodeStructure(getInterface(eobject)) + PACKAGE_SEPARATOR + getDataContainerCreatorGenName(getInterface(eobject))»;
 		
-		public abstract class «getDataContainerAbstractCreatorOnceName(eobject, objectName)» extends «getDataContainerCreatorGenName(getInterface(eobject))»{
+		public abstract class «getDataContainerAbstractCreatorOnceName(eobject, objectName)» extends «getDataContainerCreatorGenName(getInterface(eobject))» implements «getDataContainerCreatorInterfaceGenName(null,objectName)»{
 			
 		};
 	'''
