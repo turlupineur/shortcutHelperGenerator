@@ -118,7 +118,7 @@ public class UtilOutputConfigurationProvider implements IOutputConfigurationProv
 
 		OutputConfiguration genBean = new OutputConfiguration(ModelisationLanguageGenerator.BEAN_OUTPUT_ONCE);
 		genBean.setDescription("Output Folder (once)");
-		genBean.setOutputDirectory(ROOT + LOCAL_FOLDER_FOR_BEANS + BACKEND + SRC_GEN_ONCE_CONFIG);
+		genBean.setOutputDirectory(ROOT + LOCAL_FOLDER_FOR_BEANS + SRC_GEN_ONCE_CONFIG + BACKEND);
 		genBean.setOverrideExistingResources(false);
 		genBean.setCreateOutputDirectory(true);
 		genBean.setCleanUpDerivedResources(false);
