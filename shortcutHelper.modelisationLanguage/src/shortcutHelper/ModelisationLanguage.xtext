@@ -160,8 +160,9 @@ TypeData:
 
 
 AttribuableValue:
-	BackendParameter | Variable | CallComponentMethod | CallLogic
+	value=[PredicatAttribuableValue] | CallComponentMethod | CallLogic
 ;
+
 
 
 Implementation:
@@ -248,7 +249,7 @@ ConditionImplementation:
 	implementationLines+=ImplementationLine*	
 ;
 Predicat:
-	variable=[Variable] '=' comparisonValue=PredicatValueExpression
+	variable=[PredicatAttribuableValue] '=' comparisonValue=PredicatValueExpression
 ;
 
 PredicatValueExpression:
