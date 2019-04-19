@@ -25,7 +25,11 @@ CommandParameterReference:
 ;
 
 BasicType:
-	STRING | INT
+	STRING | INT | BOOLEAN_VALUES
+;
+
+BOOLEAN_VALUES :
+	'true' | 'false'
 ;
 
 Command: 
