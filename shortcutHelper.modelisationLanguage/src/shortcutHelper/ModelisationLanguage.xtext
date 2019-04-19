@@ -232,7 +232,7 @@ VariableNewValue:
 ;
 
 ValueExpression:
-	Null | UNMODELISABLE_INFORMATION | value=AttribuableValue
+	Null | UNMODELISABLE_INFORMATION | value=AttribuableValue | BasicType
 ;
 
 Condition:
@@ -248,7 +248,7 @@ Predicat:
 ;
 
 PredicatValueExpression:
-	Null | UNMODELISABLE_INFORMATION | value=[PredicatAttribuableValue] | STRING
+	Null | UNMODELISABLE_INFORMATION | value=[PredicatAttribuableValue] | BasicType
 ;
 
 PredicatAttribuableValue:
