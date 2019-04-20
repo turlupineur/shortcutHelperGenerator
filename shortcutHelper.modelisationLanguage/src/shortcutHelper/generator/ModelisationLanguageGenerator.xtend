@@ -849,9 +849,13 @@ class ModelisationLanguageGenerator extends AbstractGenerator {
 				return value;
 			}
 			
-			public Object getValueAsString()
+			public String getValueAsString()
 			{
-				return value.toString();
+				if(value == null){
+					return null;
+				}else{
+					return value.toString();					
+				}
 			}
 			
 			public void setValue(Object value)
