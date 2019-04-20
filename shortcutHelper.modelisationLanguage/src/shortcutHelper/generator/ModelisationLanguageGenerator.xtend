@@ -919,7 +919,7 @@ class ModelisationLanguageGenerator extends AbstractGenerator {
 		import «getPackageBasicCodeStructure(clazz) + PACKAGE_SEPARATOR + getInterfaceDataContainerCreatorGenName(clazz)»;
 		
 		public interface «getDataContainerCreatorInterfaceGenName(null,objectName)» extends «getInterfaceDataContainerCreatorGenName(clazz)»{
-			public static final String BEAN_ID = "«getBeanDataContainerCreatorGenName(clazz,objectName)»";
+			public static final String BEAN_ID = "«getBeanDataContainerCreatorGenName(null,objectName)»";
 		};
 	'''
 	def compileDataContainerCreatorImplGenRunnableComp(EObject eobject, String objectName)
