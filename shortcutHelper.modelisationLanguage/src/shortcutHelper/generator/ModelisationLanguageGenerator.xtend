@@ -88,6 +88,7 @@ class ModelisationLanguageGenerator extends AbstractGenerator {
 	{
 		objectStructure = new HashMap<Class,String>();
 		objectStructure.put(Functionality, "backend")
+		objectStructure.put(Logic, "backend")
 	}
 	
 	def String getObjectStructure(Class clazz, String separator)
