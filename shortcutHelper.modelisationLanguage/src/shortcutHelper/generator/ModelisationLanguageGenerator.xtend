@@ -435,7 +435,7 @@ class ModelisationLanguageGenerator extends AbstractGenerator {
 	
 	def generateDataContainerBasicCodeStructureGenClass(Class clazz, IFileSystemAccess2 fileSystemAccess, String outputConfigurationName) {
 		fileSystemAccess.generateFile(
-             getPackageBasicCodeStructureFolder(clazz) + getDataContainerGenName(clazz)+ JAVA_EXTENSION,outputConfigurationName,
+             getPackageBasicCodeStructureFolder(clazz) + getDataContainerGenNameForClassDefinition(clazz)+ JAVA_EXTENSION,outputConfigurationName,
              compileDataContainerBasicCodeStructureGenRunnableComp(clazz));
 	}
 	
@@ -705,7 +705,7 @@ class ModelisationLanguageGenerator extends AbstractGenerator {
 	
 	import «getPackageBackendCommon() + PACKAGE_SEPARATOR + getContextObjectNameImplCmd()»;
 	
-	public class «getDataContainerGenName(clazz)»{
+	public class «getDataContainerGenNameForClassDefinition(clazz)»{
 		
 		private «getContextObjectNameImplCmd()» «getContextObjectNameAsVariable»;
 		
@@ -729,7 +729,7 @@ class ModelisationLanguageGenerator extends AbstractGenerator {
 		
 		public interface «getTypeNameOfObjectForInterface(clazz)»
 		{
-			public «getResultRunnableCompGenName(clazz)» run(«getDataContainerGenName(clazz)» container);
+			public «getResultRunnableCompGenName(clazz)» run(«getDataContainerGenNameForClassDefinition(clazz)» container);
 		}
 	'''
 	
@@ -751,7 +751,7 @@ class ModelisationLanguageGenerator extends AbstractGenerator {
 		
 		public interface «getDataContainerDataExtractorGeneralInterfaceGenName()» {
 			
-			public void extractData(String [] rawData, «getDataContainerGenName(clazz)» c);
+			public void extractData(String [] rawData, «getDataContainerGenNameForClassDefinition(clazz)» c);
 			
 		}
 	'''
@@ -768,10 +768,10 @@ class ModelisationLanguageGenerator extends AbstractGenerator {
 	'''
 		package «getPackageForObject(functionality,functionality.name)»;
 		
-		import «getPackageBasicCodeStructure(getInterface(functionality)) + PACKAGE_SEPARATOR + getDataContainerGenName(getInterface(functionality))»;
+		import «getPackageBasicCodeStructure(getInterface(functionality)) + PACKAGE_SEPARATOR + getDataContainerGenNameForClassDefinition(getInterface(functionality))»;
 		
 		public class «getDataContainerDataExtractorOnceImplName(getInterface(functionality),functionality.name)» extends «getDataContainerDataExtractorGenName(functionality)»{
-			public void extractData(String [] rawData, «getDataContainerGenName(getInterface(functionality))» c)
+			public void extractData(String [] rawData, «getDataContainerGenNameForClassDefinition(getInterface(functionality))» c)
 			{
 				// implement here
 			}
@@ -782,11 +782,11 @@ class ModelisationLanguageGenerator extends AbstractGenerator {
 		package «getPackageForObject(eobject,objectName)»;
 		
 		import «getPackageBasicCodeStructure(getInterface(eobject)) + PACKAGE_SEPARATOR + getResultRunnableCompGenName(getInterface(eobject))»;
-		import «getPackageBasicCodeStructure(getInterface(eobject)) + PACKAGE_SEPARATOR + getDataContainerGenName(getInterface(eobject))»;
+		import «getPackageBasicCodeStructure(getInterface(eobject)) + PACKAGE_SEPARATOR + getDataContainerGenNameForClassDefinition(getInterface(eobject))»;
 		
 		public class «getMainClassOnceImplName(objectName)» extends «getAbstractMainClassOnceName(eobject,objectName)»
 		{
-			public «getResultRunnableCompGenName(getInterface(eobject))» runImpl(«getDataContainerGenName(getInterface(eobject))» c)
+			public «getResultRunnableCompGenName(getInterface(eobject))» runImpl(«getDataContainerGenNameForClassDefinition(getInterface(eobject))» c)
 			{
 				«getDataContainerImplGenName(eobject,objectName)» container = («getDataContainerImplGenName(eobject,objectName)» ) c; 
 				// own implementation here
@@ -874,7 +874,7 @@ class ModelisationLanguageGenerator extends AbstractGenerator {
 		
 		public abstract class «getNameAbstractClassBasicCodeStructure(clazz)» extends «generateGeneralCommonCmd()» implements «getTypeNameOfObjectForInterface(clazz)»
 		{
-			public final «getResultRunnableCompGenName(clazz)» run(«getDataContainerGenName(clazz)» container)
+			public final «getResultRunnableCompGenName(clazz)» run(«getDataContainerGenNameForClassDefinition(clazz)» container)
 			{
 				check(container);
 				preRunImpl(container);
@@ -883,16 +883,16 @@ class ModelisationLanguageGenerator extends AbstractGenerator {
 				return result;
 			}
 			
-			public abstract «getResultRunnableCompGenName(clazz)» runImpl(«getDataContainerGenName(clazz)» container);
-			public void check(«getDataContainerGenName(clazz)» container)
+			public abstract «getResultRunnableCompGenName(clazz)» runImpl(«getDataContainerGenNameForClassDefinition(clazz)» container);
+			public void check(«getDataContainerGenNameForClassDefinition(clazz)» container)
 			{
 				// implement if required
 			}
-			public void preRunImpl(«getDataContainerGenName(clazz)» container)
+			public void preRunImpl(«getDataContainerGenNameForClassDefinition(clazz)» container)
 			{
 				// implement if required
 			}
-			public void postRunImpl(«getDataContainerGenName(clazz)» container, «getResultRunnableCompGenName(clazz)» result){
+			public void postRunImpl(«getDataContainerGenNameForClassDefinition(clazz)» container, «getResultRunnableCompGenName(clazz)» result){
 				// implement if required
 			}
 		}
@@ -906,7 +906,7 @@ class ModelisationLanguageGenerator extends AbstractGenerator {
 			/**
 			* Creates the datacontainer.
 			*/			
-			public «getDataContainerGenName(clazz)» get«getDataContainerGenName(clazz)»();
+			public «getDataContainerGenNameForClassDefinition(clazz)» get«getDataContainerGenName(clazz)»();
 		};
 	'''
 	def compileDataContainerCreatorGenRunnableComp(Class clazz)
@@ -931,11 +931,11 @@ class ModelisationLanguageGenerator extends AbstractGenerator {
 	'''
 		package «getPackageForObject(eobject,objectName)»;
 		
-		import «getPackageBasicCodeStructure(getInterface(eobject)) + PACKAGE_SEPARATOR + getDataContainerGenName(getInterface(eobject))»;
+		import «getPackageBasicCodeStructure(getInterface(eobject)) + PACKAGE_SEPARATOR + getDataContainerGenNameForClassDefinition(getInterface(eobject))»;
 		
 		public class «getDataContainerCreatorImplGenName(eobject, objectName)» extends «getDataContainerAbstractCreatorOnceName(eobject,objectName)»{
 			
-			public «getDataContainerGenName(getInterface(eobject))» get«getDataContainerGenName(getInterface(eobject))»()
+			public «getDataContainerGenNameForClassDefinition(getInterface(eobject))» get«getDataContainerGenName(getInterface(eobject))»()
 			{
 				return new «getDataContainerImplGenName(eobject,objectName)»();
 			}
@@ -956,9 +956,9 @@ class ModelisationLanguageGenerator extends AbstractGenerator {
 	'''
 		package «getPackageForObject(eobject, objectName)»;
 		
-		import «getPackageBasicCodeStructure(getInterface(eobject)) + PACKAGE_SEPARATOR + getDataContainerGenName(getInterface(eobject))»;
+		import «getPackageBasicCodeStructure(getInterface(eobject)) + PACKAGE_SEPARATOR + getDataContainerGenNameForClassDefinition(getInterface(eobject))»;
 		
-		public class «getDataContainerImplGenName(eobject,objectName)» extends «getDataContainerGenName(getInterface(eobject))»{
+		public class «getDataContainerImplGenName(eobject,objectName)» extends «getDataContainerGenNameForClassDefinition(getInterface(eobject))»{
 			«IF declaration != null »
 				«FOR param:declaration.parameters»
 					private «getTypeDataAsJavaType(param.type)» «param.name»;
@@ -1142,7 +1142,10 @@ class ModelisationLanguageGenerator extends AbstractGenerator {
 	{
 		return nameObject.toFirstUpper + getDataContainerDataExtractorGeneralInterfaceGenName();
 	}
-	
+	def private String getDataContainerGenNameForClassDefinition(Class clazz)
+	{
+		return  GEN  + clazz.simpleName + "DataContainer";
+	}
 	def private String getDataContainerGenName(Class clazz)
 	{
 		return  GEN  + "DataContainer";
