@@ -43,6 +43,8 @@ Command:
 Functionality:
 	'functionality' name=ID '{'
 		description=Description?
+		names=Names
+		configuration=Configuration
 		usingSystemKomponent=UsingSystemKomponent
 		parameterDeclaration=BackendParameterDeclaration
 		returningDeclaration=ReturningDeclaration
@@ -65,6 +67,24 @@ Logic:
 
 Description:
 	UNMODELISABLE_INFORMATION
+;
+
+Names:
+	'name' ':' '{'
+		names+=Name?
+	'}'
+;
+
+Name: 
+	name=ID
+;
+
+Configuration :
+	'configuration' ':' configurationValue=ConfigurationValue
+;
+
+ConfigurationValue:
+	None | UNMODELISABLE_INFORMATION
 ;
 
 CommandParameter:
@@ -282,6 +302,10 @@ ComparisonValue:
 
 Null:
 	'null'
+;
+
+None:
+	'NONE'
 ;
 
 QualifiedName:
